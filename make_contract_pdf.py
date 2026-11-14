@@ -49,7 +49,7 @@ y -= 34
 c.drawCentredString(W / 2, y, "Once the branch is active, the full contract will open automatically.")
 
 c.setFont("Helvetica", 9)
-y -= 40
+y -= 28
 c.drawCentredString(W / 2, y, "If the problem persists, contact hr.support@northgatefintech.example")
 
 # Footer
