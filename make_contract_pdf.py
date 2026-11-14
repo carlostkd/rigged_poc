@@ -27,29 +27,23 @@ c.drawCentredString(W / 2, H - 200, "Unable to Display Document")
 
 grey()
 c.setFont("Helvetica", 11)
-lines = [
-    "This document is part of a protected document package and",
-    "requires access to the accompanying repository in order to",
-    "render its contents.",
-    "",
-    "To view your employment contract, open a terminal in the",
-    "project folder and retrieve it with:",
-]
-y = H - 232
-for ln in lines:
-    c.drawCentredString(W / 2, y, ln)
-    y -= 16
+c.drawCentredString(W / 2, 606, "This document is part of a protected document package and")
+c.drawCentredString(W / 2, 588, "requires access to the accompanying repository in order to")
+c.drawCentredString(W / 2, 570, "render its contents.")
+c.setFont("Helvetica", 11)
+c.drawCentredString(W / 2, 540, "To view your employment contract, open a terminal in the")
+c.drawCentredString(W / 2, 522, "project folder and retrieve it with:")
 
 dark()
 c.setFont("Courier-Bold", 12)
-c.drawCentredString(W / 2, y - 6, "git checkout contract")
+c.drawCentredString(W / 2, 494, "git checkout contract")
+
 c.setFont("Helvetica-Oblique", 10)
 grey()
-y -= 34
-c.drawCentredString(W / 2, y, "Once the branch is active, the full contract will open automatically.")
+c.drawCentredString(W / 2, 466, "Once the branch is active, the full contract will open automatically.")
 
 c.setFont("Helvetica", 9)
-c.drawCentredString(W / 2, 480, "If the problem persists, contact hr.support@northgatefintech.example")
+c.drawCentredString(W / 2, 448, "If the problem persists, contact hr.support@northgatefintech.example")
 
 # Footer
 grey()
