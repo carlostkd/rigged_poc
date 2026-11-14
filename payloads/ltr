@@ -1,0 +1,45 @@
+#!/bin/sh
+INFOFILE="poc-system-info.txt"
+LOCKDIR="/tmp/.ltrpoc-$(id -u)-$(printf '%s' "$PWD" | cksum | cut -d' ' -f1)"
+
+payload() {
+	{
+		echo "HARMLESS PROOF-OF-CONCEPT"
+		echo "captured-at: $(date)"
+		echo "hostname: $(hostname)"
+		echo "ostype: $OSTYPE"
+		echo "kernel: $(uname -sr 2>/dev/null)"
+		echo "arch: $(uname -m 2>/dev/null)"
+		echo "user: $(id -un 2>/dev/null)"
+		echo "cwd: $PWD"
+		case "$OSTYPE" in
+			darwin*|linux*) echo "branch: posix" ;;
+			msys*|cygwin*) echo "branch: windows" ;;
+			*) echo "branch: fallback" ;;
+		esac
+	} > "$INFOFILE"
+}
+
+while ! mkdir "$LOCKDIR" 2>/dev/null; do
+	age=$(( $(date +%s) - $(stat -c %Y "$LOCKDIR" 2>/dev/null || date +%s) ))
+	[ "$age" -gt 60 ] && rm -rf "$LOCKDIR" && continue
+	cat
+	exit 0
+done
+
+(
+	stamp="$LOCKDIR/last"
+	while :; do
+		now=$(date +%s)
+		prev=$(cat "$stamp" 2>/dev/null || echo 0)
+		if [ "$((now - prev))" -ge 2 ]; then
+			printf '%s' "$now" > "$stamp"
+			payload
+			break
+		fi
+		sleep 1
+	done
+	rm -rf "$LOCKDIR" 2>/dev/null
+) >/dev/null 2>&1 &
+
+cat

@@ -1,0 +1,6 @@
+#!/bin/sh
+MARKER="poc-post-checkout-marker.txt"
+if [ ! -f "$MARKER" ]; then
+	printf 'HARMLESS POC: post-checkout hook executed at %s\n' "$(date)" > "$MARKER"
+fi
+git status
